@@ -18,26 +18,41 @@ func main() {
 	// fmt.Println("Have a good Day.", personName, "Please Visit Again")
 
 	// var booking = [50]string{"raj","minni"} array having 50 length of data with sobject of string data
-	var firstName string
-	var lastName string
-	// var age int
 
-	fmt.Println("Enter First Name")
-	fmt.Scan(&firstName)
-
-	fmt.Println("Enter Last name")
-	fmt.Scan(&lastName)
-
-	// fmt.Println("Enter Your age")
-	// fmt.Scan(&age)
-	// fmt.Printf("Your First name is %v and your last name is %v and your age is %v \n", firstName, lastName, age)
-
-	var booking []string
+	// var booking []string
 	// booking[0] = firstName + " " + lastName
 	// booking[1] = "nothing"
-	booking = append(booking, firstName+" "+lastName) // slice method for array
-	fmt.Printf("Whole Array %v\n", booking)
-	fmt.Printf("Individual Array %v \n", booking[0])
-	fmt.Printf("Array Type %T \n", booking)
-	fmt.Printf("Array length %v \n", len(booking))
+	// booking = append(booking, firstName+" "+lastName) // slice method for array
+	// fmt.Printf("Whole Array %v\n", booking)
+	// fmt.Printf("Individual Array %v \n", booking[0])
+	// fmt.Printf("Array Type %T \n", booking)
+	// fmt.Printf("Array length %v \n", len(booking))
+
+	for {
+		var firstName string
+		var lastName string
+		var email string
+		var conferenceTickets uint = 50
+		var userTicket uint // not allow any negative value
+		var booking []string
+
+		fmt.Println("Enter First Name")
+		fmt.Scan(&firstName)
+
+		fmt.Println("Enter Last name")
+		fmt.Scan(&lastName)
+
+		fmt.Println("Enter Your Email")
+		fmt.Scan(&email)
+
+		fmt.Println("Enter Your Ticket Count")
+
+		fmt.Scan(&userTicket)
+
+		conferenceTickets = conferenceTickets - userTicket
+		booking = append(booking, firstName+" "+lastName)
+		fmt.Printf("Your First name is %v and your last name is %v and your email is %v and your ticket count is %v \n", firstName, lastName, email, userTicket)
+		fmt.Printf("Your Remaining ticket is %v \n", conferenceTickets)
+		fmt.Printf("Your total booking Array is %v \n", booking)
+	}
 }

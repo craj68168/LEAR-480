@@ -1,23 +1,24 @@
 package main
 
 import (
+	"LEAR-480-Go/helper"
 	"fmt"
-	"strings"
+	"strconv"
 )
 
 var remainingTickets uint = 50
-var bookings []string
+var bookings = make([]map[string]string, 0)
 
 func main() {
 
 	for {
 		firstName, lastName, email, userTicket := getUserInput()
 
-		isValidName, isValidEmail, isValidTicket := getValidateUser(firstName, lastName, email, userTicket)
+		isValidName, isValidEmail, isValidTicket := helper.GetValidateUser(firstName, lastName, email, userTicket, remainingTickets)
 
 		if isValidEmail && isValidName && isValidTicket {
 
-			bookTicket(bookings, firstName, lastName, email, userTicket)
+			bookTicket(firstName, lastName, email, userTicket)
 
 			firstNames := getFirstName()
 			fmt.Printf("The First name of the booking are %v \n", firstNames)
@@ -44,17 +45,9 @@ func main() {
 func getFirstName() []string {
 	firstNames := []string{}
 	for _, booking := range bookings { // _ identify unused variables.
-		var names = strings.Fields(booking)
-		firstNames = append(firstNames, names[0])
+		firstNames = append(firstNames, booking["firstName"])
 	}
 	return firstNames
-}
-
-func getValidateUser(firstName string, lastName string, email string, userTicket uint) (bool, bool, bool) {
-	isValidName := len(firstName) >= 2 && len(lastName) >= 2
-	isValidEmail := strings.Contains(email, "@")
-	isValidTicket := userTicket > 0 && userTicket <= remainingTickets
-	return isValidName, isValidEmail, isValidTicket
 }
 
 func getUserInput() (string, string, string, uint) {
@@ -79,12 +72,23 @@ func getUserInput() (string, string, string, uint) {
 
 }
 
-func bookTicket(bookings []string, firstName string, lastName string, email string, userTicket uint) {
+func bookTicket(firstName string, lastName string, email string, userTicket uint) {
 	remainingTickets = remainingTickets - userTicket
-	bookings = append(bookings, firstName+" "+lastName)
+
+	// create a map for user
+	var userData = make(map[string]string) // key and value pair with string
+	userData["firstName"] = firstName
+	userData["lastName"] = lastName
+	userData["email"] = email
+	userData["numberOfTickets"] = strconv.FormatUint(uint64(userTicket), 10)
+
+	bookings = append(bookings, userData)
+	fmt.Printf("List of Bookings %v \n", bookings)
+
 	fmt.Printf("Your First name is %v and your last name is %v and your ticket count is %v \n", firstName, lastName, userTicket)
 	fmt.Printf("Your email is %v \n", email)
 	fmt.Printf("Your Remaining ticket is %v \n", remainingTickets)
+
 }
 
 // var conferenceName string = "Bookings System"
